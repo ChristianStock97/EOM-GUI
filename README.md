@@ -27,6 +27,23 @@ A minimal Qt GUI for controlling the EOM regulator via a Windows DLL.
 - If Qt backend errors, install an alternative like `PySide6` and update `requirements.txt` and code imports if needed.
 
 
+> **Important:** The batch files assume they are run from the project folder. They set the working directory correctly.
+
+---
+
+## Requirements
+
+- **Windows**
+- **Python 3.11+** (tested with 3.12)
+- Your EOM **DLL** must export the following C API (cdecl by default):
+  ```c
+  void* EOM_Create(short, double, double, double, double, double, double);
+  bool  EOM_Start(void*);
+  void  EOM_Stop(void*);
+  void  EOM_GetValue(void*, double* /*diode*/, double* /*bias*/, bool* /*laser_on*/);
+  void  EOM_Destroy(void*);
+
+
 A DLL exporting:
     EOM_Create(short, double, double, double, double, double, double) -> void*
     EOM_Start(void*) -> bool
