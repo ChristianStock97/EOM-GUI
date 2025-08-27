@@ -31,7 +31,19 @@ A minimal Qt GUI for controlling the EOM regulator via a Windows DLL.
 
 ---
 
-## Requirements
+## Dependencies
+
+This GUI depends on the **EOM_Controller_NI** DLL project, which provides the C++ implementation of the regulator.  
+The source code for the DLL is available here:
+
+👉 [EOM_Controller_NI (GitHub)](https://github.com/ChristianStock97/EOM_Controller_NI)
+
+You need to build the DLL from that repository (Visual Studio recommended) and set its path in your `eom.ini`:
+
+```ini
+[EOM_DLL]
+dll_path = D:/Programmierung/EOM_Controller_NI/x64/Debug/EOM_Controller_NI.dll
+use_stdcall = no
 
 - **Windows**
 - **Python 3.11+** (tested with 3.12)
@@ -42,11 +54,3 @@ A minimal Qt GUI for controlling the EOM regulator via a Windows DLL.
   void  EOM_Stop(void*);
   void  EOM_GetValue(void*, double* /*diode*/, double* /*bias*/, bool* /*laser_on*/);
   void  EOM_Destroy(void*);
-
-
-A DLL exporting:
-    EOM_Create(short, double, double, double, double, double, double) -> void*
-    EOM_Start(void*) -> bool
-    EOM_Stop(void*) -> void
-    EOM_GetValue(void*, double*, double*, bool*) -> void
-    EOM_Destroy(void*) -> v
