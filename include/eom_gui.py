@@ -12,6 +12,7 @@ class EOM_GUI(QWidget):
         self.start_button = QPushButton("PD: 0.000  B: 0.000", self)
         self.start_button.setStyleSheet("background-color: red")
         self.start_button.setFixedSize(260, 36)
+        self.start_button.clicked.connect(self.restart_reg)
 
         layout = QGridLayout()
         layout.addWidget(self.start_button, 0, 0)
@@ -32,6 +33,15 @@ class EOM_GUI(QWidget):
         except Exception:
             pass
 
+    def restart_reg(self):
+        if self._timer is not None:
+            self._timer.stop()
+        try:
+            self.eom.stop()
+        except Exception:
+            pass
+        self.start_regulation()
+        
     def start_regulation(self):
         self.eom.start()
         self._timer = QTimer()
