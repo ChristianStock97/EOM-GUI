@@ -7,6 +7,7 @@ class EOM_GUI(QWidget):
         super().__init__(parent)
         self._timer = None
         self.eom = EOMController.from_config_path("eom.ini")
+        self.start_button = None
 
     def return_window(self):
         self.start_button = QPushButton("PD: 0.000  B: 0.000", self)
@@ -24,6 +25,13 @@ class EOM_GUI(QWidget):
 
         self.start_regulation()
         return laser_gui
+
+    def return_button(self):
+        self.start_button = QPushButton("PD: 0.000  B: 0.000", self)
+        self.start_button.setStyleSheet("background-color: red")
+        self.start_button.setFixedSize(260, 36)
+        self.start_button.clicked.connect(self.restart_reg)
+        return self.start_button
 
     def if_window_closed(self):
         if self._timer is not None:
